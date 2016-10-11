@@ -2,8 +2,12 @@ require 'rexml/document'
 
 module ApiUtils
 
+  CAMELIZE_EXCEPTIONS = %w(of)
+
   def self.camelize_with_space(str)
-    str.split('_').map {|w| w.capitalize}.join(' ')
+    str.split('_').map do |w|
+      CAMELIZE_EXCEPTIONS.include?(w) ? w : w.capitalize
+    end.join(' ')
   end
 
   def self.string_to_method_name(s)
